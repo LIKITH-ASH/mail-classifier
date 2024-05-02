@@ -18,7 +18,7 @@ class Chainer:
             df['y'] = df['y'].apply(lambda t: ''.join(str(int(i)) for i in t))
             return df
 
-    def decode_unchained(self, y):
+    def decode_data(self, y):
 
         vfunc = np.vectorize(lambda s: [np.float64(i) for i in s], otypes=[list])
         y = vfunc(y)

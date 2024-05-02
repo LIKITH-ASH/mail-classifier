@@ -3,6 +3,7 @@ from embeddings import *
 from modelling.modelling import *
 from modelling.data_model import *
 import random
+from modelling.chin import Chainer
 seed =0
 random.seed(seed)
 np.random.seed(seed)
@@ -29,8 +30,8 @@ def get_embeddings(df:pd.DataFrame):
 def get_data_object(X: np.ndarray, df: pd.DataFrame):
     return Data(X, df)
 
-def perform_modelling(data: Data, df: pd.DataFrame, name):
-    model_predict(data, df, name)
+def perform_modelling(data: Data, chainer:Chainer =None):
+    model_predict(data, chainer)
 
 if __name__ == '__main__':
     df = load_data()
@@ -39,8 +40,10 @@ if __name__ == '__main__':
     df[Config.TICKET_SUMMARY] = df[Config.TICKET_SUMMARY].values.astype('U')
     grouped_df = df.groupby(Config.GROUPED)
     for name, group_df in grouped_df:
-        print(name)
+        chained_cols = Config.TYPE_COLS
+        print("Name")
+        chainer = Chainer(chained_cols)
         X, group_df = get_embeddings(group_df)
+        group_df = chainer.linkMultipleTargetVar(group_df)
         data = get_data_object(X, group_df)
-        perform_modelling(data, group_df, name)
-
+        perform_modelling(data, chainer)
