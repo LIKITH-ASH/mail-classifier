@@ -3,6 +3,7 @@ import pandas as pd
 from model.base import BaseModel
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
+from modelling.chin import Chainer
 from numpy import *
 import random
 num_folds = 0
@@ -36,9 +37,18 @@ class RandomForest(BaseModel):
         predictions = self.mdl.predict(X_test)
         self.predictions = predictions
 
-    def print_results(self, data):
-        print(classification_report(data.y_test, self.predictions))
-
+    def print_results(self, data, chainer: Chainer = None, remove_types: int = 0) -> None:
+        y_test = data.y_test
+        predictions = self.predictions
+        if chainer is None:
+            print(classification_report(y_test, predictions))
+        if chainer is not None:
+            y_test = chainer.decode_data(data.y_test)
+            predictions = chainer.decode_data(predictions)
+        if remove_types > 0:
+            y_test = chainer.remove_type(y_test, remove_types)
+            predictions = chainer.remove_type(predictions, remove_types)
+        print(classification_report(y_test, predictions))
 
     def data_transform(self) -> None:
         ...
