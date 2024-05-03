@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
 
 
-class Chainer:
+class Link:
     encoder = None
     DELIMITER = ' -- '
     def __init__(self, columns_to_chain ):
@@ -30,4 +30,4 @@ class Chainer:
 
     def remove_type(self, y: np.ndarray, num_types: int = 1):
         y = pd.Series(y)
-        return y.apply(lambda x: Chainer.DELIMITER.join(x.split(Chainer.DELIMITER)[:-num_types]))
+        return y.apply(lambda x: Link.DELIMITER.join(x.split(Link.DELIMITER)[:-num_types]))

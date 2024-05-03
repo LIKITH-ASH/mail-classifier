@@ -3,7 +3,7 @@ from embeddings import *
 from modelling.modelling import *
 from modelling.data_model import *
 import random
-from modelling.multi_output import Chainer
+from modelling.multi_output import Link
 seed =0
 random.seed(seed)
 np.random.seed(seed)
@@ -30,8 +30,8 @@ def get_embeddings(df:pd.DataFrame):
 def get_data_object(X: np.ndarray, df: pd.DataFrame):
     return Data(X, df)
 
-def perform_modelling(data: Data, chainer:Chainer =None):
-    model_predict(data, chainer)
+def perform_modelling(data: Data, linked:Link =None):
+    model_predict(data, linked)
 
 if __name__ == '__main__':
     df = load_data()
@@ -42,8 +42,8 @@ if __name__ == '__main__':
     for name, group_df in grouped_df:
         chained_cols = Config.TYPE_COLS
         print("Name")
-        chainer = Chainer(chained_cols)
+        linked = Link(chained_cols)
         X, group_df = get_embeddings(group_df)
-        group_df = chainer.linkMultipleTargetVar(group_df)
+        group_df = linked.linkMultipleTargetVar(group_df)
         data = get_data_object(X, group_df)
-        perform_modelling(data, chainer)
+        perform_modelling(data, linked)
