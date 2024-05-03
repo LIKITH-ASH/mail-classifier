@@ -3,7 +3,7 @@ import pandas as pd
 from model.base import BaseModel
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
-from modelling.chin import Chainer
+from modelling.multi_output import Chainer
 from numpy import *
 import random
 num_folds = 0

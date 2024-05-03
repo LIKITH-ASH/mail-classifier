@@ -3,7 +3,7 @@ from embeddings import *
 from modelling.modelling import *
 from modelling.data_model import *
 import random
-from modelling.chin import Chainer
+from modelling.multi_output import Chainer
 seed =0
 random.seed(seed)
 np.random.seed(seed)

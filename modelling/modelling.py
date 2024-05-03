@@ -1,5 +1,5 @@
 from model.randomforest import RandomForest
-from modelling.chin import Chainer
+from modelling.multi_output import Chainer
 
 
 
